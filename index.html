@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Наш дом"><meta name="theme-color" content="#ff6f9c">
+<title>Наш уютный дом</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#fff3f6;--card:#fff;--ink:#4a3340;--mut:#9a7f8c;--acc:#ff6f9c;--soft:#ffdce8;--bar:#f1e1e8;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#231a20;--card:#33252e;--ink:#fbe9f0;--mut:#c4a3b3;--acc:#ff8fb1;--soft:#573449;--bar:#47323f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#231a20;--card:#33252e;--ink:#fbe9f0;--mut:#c4a3b3;--acc:#ff8fb1;--soft:#573449;--bar:#47323f;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px);overscroll-behavior:none;-webkit-tap-highlight-color:transparent}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:520px;margin:0 auto;padding:12px}
+.card{background:var(--card);border-radius:18px;padding:12px;margin-bottom:12px;box-shadow:0 2px 10px #0000000f}
+h2{font-size:15px;margin:0 0 8px;color:var(--mut);font-weight:600}
+button{font:inherit;border:0;border-radius:12px;padding:8px 10px;background:var(--soft);color:var(--ink);cursor:pointer}
+button.p{background:var(--acc);color:#fff}
+button:disabled{opacity:.45;cursor:default}
+input{font:inherit;width:100%;padding:9px 11px;border-radius:12px;border:2px solid var(--soft);background:var(--bg);color:var(--ink)}
+.hdr{display:flex;align-items:center;gap:10px}.grow{flex:1}
+.xp,.bar{height:8px;background:var(--bar);border-radius:6px;overflow:hidden;margin-top:4px}
+.xp i,.bar i{display:block;height:100%;background:var(--acc)}
+.bar.h i{background:#ffb347}.bar.j i{background:#6ec6ff}
+.room{position:relative;height:240px;border-radius:18px;overflow:hidden;margin-bottom:12px}
+.floor{position:absolute;left:0;right:0;bottom:0;height:28%}
+.it{position:absolute;line-height:1;transform:translateX(-50%)}
+.pet{position:absolute;left:50%;bottom:5%;transform:translateX(-50%);text-align:center;animation:bob 2.2s ease-in-out infinite}
+.pet .e{line-height:1}.pet .acc{position:absolute;top:-16px;left:50%;font-size:26px;transform:translateX(-30%)}
+.pet small{display:block;background:#ffffffcc;color:#4a3340;border-radius:8px;padding:0 6px;font-size:12px}
+.bub{position:absolute;top:8px;left:8px;right:8px;background:#ffffffee;color:#4a3340;border-radius:14px;padding:6px 10px;font-size:13px}
+@keyframes bob{50%{transform:translateX(-50%) translateY(-7px)}}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1;min-width:90px}
+.shop{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.si{border:2px solid var(--soft);border-radius:14px;padding:8px;text-align:center}
+.si .e{font-size:30px}small.m,.mut{color:var(--mut);font-size:13px;display:block}
+.pick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.pick button{font-size:34px}.pick button.on{outline:3px solid var(--acc)}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:14px;opacity:0;transition:.3s;pointer-events:none;z-index:9;max-width:90%;text-align:center}
+#toast.on{opacity:1}
+#game{position:fixed;inset:0;background:var(--bg);z-index:8;padding:calc(12px + env(safe-area-inset-top,0px)) 12px 12px;display:none;flex-direction:column}
+#game.on{display:flex}
+#arena{position:relative;flex:1;overflow:hidden;border-radius:18px;background:var(--card);touch-action:manipulation}
+.fall{position:absolute;top:-50px;font-size:38px;padding:4px;background:none;animation:fall 3.2s linear forwards}
+@keyframes fall{to{top:105%}}
+.g3,.g4{display:grid;gap:8px;padding:12px;height:100%}.g3{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr)}.g4{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(4,1fr)}
+.mc{font-size:34px;background:var(--soft)}
+.rb{width:100%;height:100%;border-radius:18px;font-size:24px;color:#fff;background:#ff6b6b}
+.note{background:var(--soft);border-radius:12px;padding:8px 10px;margin-bottom:8px}
+.q{display:flex;justify-content:space-between;padding:3px 0;font-size:14px}
+.tabs{display:flex;gap:6px;margin-bottom:10px}.tabs button{flex:1;padding:8px 2px;font-size:13px}.tabs button.on{background:var(--acc);color:#fff}
+.bar.p i{background:#7fd18a}.pet{cursor:pointer}.pet.walk{animation:stroll 4s linear infinite}@keyframes stroll{0%,100%{left:15%}50%{left:85%}}
+</style></head><body><main>
+<div id="msg" class="card mut">Загружаем ваш дом…</div>
+<div id="connect" class="card" style="display:none"><h2>Подключение</h2>
+ <p>Тебя пригласили? Вставь ссылку-приглашение:</p><input id="lnk" placeholder="Ссылка-приглашение"><div style="margin:8px 0 16px"><button class="p" data-a="paste" style="width:100%">Подключиться</button></div>
+ <p>Создаёшь дом первым? Вставь адрес базы Firebase Realtime Database:</p><input id="fb" placeholder="https://….firebasedatabase.app"><div style="margin-top:8px"><button class="p" data-a="create" style="width:100%">Создать дом</button></div></div>
+<div id="setup" style="display:none"></div>
+<div id="app" style="display:none">
+ <div class="card" id="hdr"></div><div class="tabs" id="tabs"></div><div id="room"></div>
+ <div class="card" id="pet"></div>
+ <div class="card"><h2>Мини-игры · монеты нужно зарабатывать</h2><div class="row" id="games"></div></div>
+ <div class="card"><h2>Задания дня (общие)</h2><div id="quests"></div></div>
+ <div class="card"><h2>Вместе</h2><div id="tog"></div>
+  <div class="row"><button class="p" data-a="hug">🤗 Обнять вместе</button><button data-a="daily" id="dl">🎁 Подарок дня</button></div>
+  <div style="margin-top:10px"><div id="pnote"></div><div class="row"><input id="ni" maxlength="80" placeholder="Записочка второй половинке 💌"><button data-a="note" style="flex:0 0 auto;min-width:0">Отправить</button></div></div></div>
+ <div class="card"><h2>Письма от питомца</h2><div id="mail"></div></div>
+ <div class="card"><h2>Магазин для дома</h2><div class="shop" id="shop"></div></div>
+ <div class="card"><h2>Настройки</h2><p class="mut">Ссылка-приглашение для второй половинки:</p><input id="inv" readonly><div class="row" style="margin-top:8px"><button data-a="share">📤 Поделиться</button><button data-a="copy">📋 Копировать</button></div><div style="margin-top:10px"><button data-a="leave">Выйти из дома</button></div></div>
+</div></main>
+<div id="game"><div class="hdr" style="margin-bottom:8px"><button data-a="close">✖</button><b id="gn" class="grow"></b><b id="gt"></b><b id="gs">0</b></div><div id="arena"></div></div>
+<div id="toast"></div>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const TYPES=[['🐱','Котик'],['🐰','Зайка'],['🦊','Лисёнок'],['🐼','Панда'],['🐸','Лягушонок'],['🐧','Пингвин']];
+const ITEMS=[
+{id:'win',e:'🌅',n:'Окно',c:40,l:1,x:12,b:50,s:46},{id:'plant',e:'🌻',n:'Подсолнух',c:50,l:1,x:92,b:20,s:36},
+{id:'flow',e:'🌷',n:'Тюльпаны',c:70,l:2,x:60,b:24,s:28},{id:'art',e:'🖼️',n:'Картина',c:80,l:2,x:45,b:60,s:38},
+{id:'sofa',e:'🛋️',n:'Диван',c:150,l:2,x:78,b:20,s:62},{id:'book',e:'📚',n:'Книги',c:120,l:3,x:6,b:24,s:44},
+{id:'bed',e:'🛏️',n:'Кровать',c:180,l:3,x:24,b:20,s:54},{id:'tv',e:'📺',n:'Телевизор',c:220,l:4,x:34,b:38,s:38},
+{id:'lite',e:'✨',n:'Гирлянда',c:160,l:4,x:50,b:84,s:30},{id:'fish',e:'🐠',n:'Аквариум',c:260,l:5,x:66,b:52,s:34},
+{id:'ball',e:'🎈',n:'Шарики',c:140,l:5,x:84,b:64,s:32},{id:'piano',e:'🎹',n:'Пианино',c:350,l:6,x:16,b:22,s:50},
+{id:'cake',e:'🧸',n:'Мишка',c:260,l:7,x:50,b:12,s:30},{id:'moon',e:'🌙',n:'Лунный свет',c:320,l:8,x:90,b:62,s:36},
+{id:'neon',e:'💗',n:'Неон-сердце',c:450,l:9,x:28,b:66,s:38}];
+const THEMES=[[1,'linear-gradient(#fff1e0,#ffe3d0)','#e8c9a8'],[3,'linear-gradient(#ffe0ec,#ffd0e2)','#f0bcd0'],[5,'linear-gradient(#e6dcff,#d6c8ff)','#c3b2f0'],[8,'linear-gradient(#2b2a5c,#4b3a7a)','#3a2d63']];
+const FOOD=[['🍓','Ягодка',3,{hunger:25}],['🍰','Тортик',8,{hunger:40,joy:15}],['🍲','Обед',14,{hunger:70,love:10}]];
+const QUESTS=[{k:'feed',n:2,r:6,t:'покормить 2 раза'},{k:'game',n:3,r:10,t:'сыграть 3 раза'},{k:'hug',n:1,r:8,t:'обняться вместе'},{k:'note',n:1,r:5,t:'отправить записочку'},{k:'walk',n:1,r:8,t:'погулять во дворе'}];
+const RATE={hunger:.5,joy:.4,love:.3,potty:.35},CD=90000,WALK=300000,ROOMS={home:'🏠 Дом',kitchen:'🍳 Кухня',bath:'🚽 Уборная',yard:'🌳 Двор'},
+SC={kitchen:{bg:'linear-gradient(#fff6dc,#ffe8b8)',fl:'#e6c58f',d:[['🌅',14,52,44],['🥛',90,22,58],['🍳',42,38,32],['🍽️',66,30,28],['🥖',62,58,26]]},
+bath:{bg:'linear-gradient(#dff3ff,#c9e8fa)',fl:'#a9d3ea',d:[['🚽',14,22,56],['🛁',82,22,64],['🚿',50,58,40],['🧼',62,30,24],['💧',30,62,26],['🧻',30,30,24]]},
+yard:{bg:'linear-gradient(#bfe8ff,#e6f7ff)',fl:'#7fd18a',d:[['☀️',86,72,40],['☁️',22,76,36],['🌳',8,26,70],['🌳',93,28,60],['🌼',34,12,22],['🌷',72,12,22],['🏡',62,36,44]]}};
+let ref,uid,S=null,exists=false,canW=true,lastL=null,pick=0,setupOn=false,stopG=null,fin=false,room='home',walkUntil=0,said=null;
+const day=()=>new Date().toISOString().slice(0,10);
+const lvl=x=>Math.floor(Math.sqrt((x||0)/40))+1;
+const cur=(p,k)=>Math.max(0,Math.min(100,(p[k]??100)-(Date.now()-(p.t||Date.now()))/60000*RATE[k]));
+const stats=p=>({hunger:cur(p,'hunger'),joy:cur(p,'joy'),love:cur(p,'love'),potty:cur(p,'potty')});
+const pid=()=>Object.keys(S.members||{}).find(k=>k!==uid);
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2800)}
+const LS=localStorage;let cfg=null,pending=0,lastWrite=0,lastJ='',opened=false;
+const url=()=>cfg.u+'/homes/'+cfg.h+'.json';
+const link=()=>location.origin+location.pathname+'#j='+encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(cfg)))));
+function flat(o,pre,out){for(const k in o){const v=o[k],p=pre?pre+'/'+k:k;if(v&&typeof v==='object'&&!Array.isArray(v))flat(v,p,out);else out[p]=v}return out}
+function merge(t,p){for(const k in p){const v=p[k];if(v===null)delete t[k];else if(typeof v==='object'&&!Array.isArray(v)){if(!t[k]||typeof t[k]!=='object')t[k]={};merge(t[k],v)}else t[k]=v}}
+async function upd(p){
+ pending++;lastWrite=Date.now();
+ try{merge(S,p);render();const r=await fetch(url(),{method:'PATCH',body:JSON.stringify(flat(p,'',{}))});if(!r.ok)throw 0;return true}
+ catch(e){toast('Нет связи — изменение не сохранилось');return false}
+ finally{pending--;lastWrite=Date.now()}}
+async function act(o,qk){
+ let c=o.coins||0,x=o.xp||0,p={...(o.extra||{})};
+ if(qk){const d=day(),q=(S.q&&S.q[d])||{},n=(q[qk]||0)+1,Q=QUESTS.find(z=>z.k===qk);p.q={[d]:{[qk]:n}};if(Q&&n===Q.n){c+=Q.r;toast('✅ '+Q.t+': +'+Q.r+' 💰')}}
+ if(o.bump){const s=stats(S.pet);for(const k in o.bump)s[k]=Math.max(0,Math.min(100,s[k]+o.bump[k]));p.pet={...s,t:Date.now()}}
+ if(c)p.coins=Math.max(0,(S.coins||0)+c);if(x)p.xp=(S.xp||0)+x;
+ return upd(p)}
+function readJ(txt){const m=(txt||'').match(/j=([^&\s]+)/);if(!m)return null;try{const o=JSON.parse(decodeURIComponent(escape(atob(decodeURIComponent(m[1])))));return o.u&&o.h?o:null}catch(e){return null}}
+function init(){
+ uid=LS.getItem('huid');if(!uid){uid=Math.random().toString(36).slice(2,12)+Date.now().toString(36);LS.setItem('huid',uid)}
+ cfg=readJ(location.hash);if(cfg)LS.setItem('hcfg',JSON.stringify(cfg));
+ else try{cfg=JSON.parse(LS.getItem('hcfg'))}catch(e){}
+ if(!cfg){$('#msg').style.display='none';$('#connect').style.display='block';return}
+ start()}
+async function start(){
+ $('#connect').style.display='none';$('#msg').style.display='block';$('#msg').textContent='Загружаем ваш дом…';
+ history.replaceState(null,'','#j='+encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(cfg))))));
+ $('#inv').value=link();
+ await poll();setInterval(poll,4000);setInterval(()=>S&&render(),15000)}
+async function poll(){
+ if(pending||Date.now()-lastWrite<1500)return;
+ try{const r=await fetch(url());if(!r.ok)throw 0;const d=await r.json(),j=JSON.stringify(d);
+  if(S&&j===lastJ)return;lastJ=j;S=d||{coins:20,xp:0,items:[],members:{}};S.items=S.items||[];S.members=S.members||{};render()}
+ catch(e){if(!S){$('#msg').style.display='block';$('#msg').textContent='Нет связи с базой. Проверь интернет и адрес Firebase. Повторяем…'}}}
+function onOpen(){
+ if(!S.pet)return;
+  const B=Math.floor(Date.now()/14400000),p=pid(),seen=p&&S.seen&&S.seen[p],n=S.pet.name,patch={seen:{[uid]:Date.now()}};
+ if(!(S.msgs&&S.msgs['m'+B])){const s=stats(S.pet),low=Object.entries(s).sort((a,b)=>a[1]-b[1])[0];let L;
+  if(p&&seen&&Date.now()-seen>28800000)L=['Мне не хватает вашей половинки дома… напиши ей записочку 💌','Тут стало тише без второго хозяина. Позови его? 🥺'];
+  else if(low[1]<35)L={hunger:['Животик урчит… принесите вкусняшку 🍓','Я мечтаю о тортике 🍰'],joy:['Мне скучно! Сыграем во что-нибудь? 🎮','Я смотрю в окно и жду игр 👀'],love:['Хочу обнимашек 🤍','Погладь меня, пожалуйста 🥺'],potty:['Мне нужно в уборную… 🚽','Пора сходить на горшок! 🚽']}[low[0]];
+  else L=['Сегодня хороший день, чтобы обняться вдвоём 🤗','Мне приснилось, как вы вместе гуляете 🌙','Я вас обоих очень люблю 💗','Давайте сделаем дом ещё уютнее 🛋️','Спасибо, что вы у меня есть ✨'];
+  patch.msgs={['m'+B]:{text:n+': «'+L[B%L.length]+'»',ts:Date.now()}}}
+ upd(patch)}
+function ago(t){const m=Math.round((Date.now()-t)/60000);return m<60?m+' мин назад':m<1440?Math.round(m/60)+' ч назад':Math.round(m/1440)+' дн назад'}
+function render(){
+ $('#msg').style.display='none';
+ if(!S.pet){$('#app').style.display='none';if(!setupOn){setupOn=true;showSetup()}return}
+ if(!S.members[uid]){$('#app').style.display='none';$('#setup').style.display='block';const full=Object.keys(S.members).length>=2;$('#setup').innerHTML=`<div class="card"><h2>${esc(S.pet.name)} ждёт вас 🥚</h2><p>${full?'В доме уже двое хозяев. Если это твоё новое устройство — можно заменить самое старое.':'Присоединиться к уходу за питомцем?'}</p><button class="p" data-a="join" style="width:100%">${full?'Заменить устройство':'Присоединиться'}</button></div>`;return}
+ setupOn=false;$('#setup').style.display='none';if(!opened){opened=true;onOpen()}$('#app').style.display='block';
+ const L=lvl(S.xp),P=S.pet,s=stats(P);
+ if(lastL!==null&&L>lastL)toast(L===2?'🐣 '+P.name+' вылупился!':L===3?'💬 '+P.name+' научился говорить! Нажми на него':'🎉 Уровень дома: '+L+'!');lastL=L;
+ const base=40*(L-1)**2,next=40*L**2,pr=Math.min(100,((S.xp-base)/(next-base))*100);
+ $('#hdr').innerHTML=`<div class="hdr"><div class="grow"><b>Уровень ${L}</b> <span class="mut" style="display:inline">· ${S.xp||0}/${next} XP</span><div class="xp"><i style="width:${pr}%"></i></div></div><b>💰 ${S.coins||0}</b></div>`;
+ const th=THEMES.filter(t=>t[0]<=L).pop();
+ const RS=room==='home'?[th[1],th[2]]:[SC[room].bg,SC[room].fl];let r=`<div class="room" style="background:${RS[0]}"><div class="floor" style="background:${RS[1]}"></div>`;
+ if(room!=='home')SC[room].d.forEach(d=>r+=`<span class="it" style="left:${d[1]}%;bottom:${d[2]}%;font-size:${d[3]}px">${d[0]}</span>`);for(const id of room==='home'?S.items:[]){const it=ITEMS.find(i=>i.id===id);if(it)r+=`<span class="it" style="left:${it.x}%;bottom:${it.b}%;font-size:${it.s}px">${it.e}</span>`}
+ const ms=Object.values(S.msgs||{}).sort((a,b)=>b.ts-a.ts);
+ r+=`<div class="pet${Date.now()<walkUntil?' walk':''}" data-a="talk"><span class="acc">${L>=7?'👑':L>=3?'🎀':''}</span><div class="e" style="font-size:${L<2?50:L<4?56:68}px">${L<2?'🥚':esc(P.type)}</div><small>${esc(P.name)}</small></div>`;
+ const bt=said&&Date.now()<said[1]?said[0]:(ms[0]&&ms[0].text);if(bt)r+=`<div class="bub">${esc(bt)}</div>`;
+ $('#room').innerHTML=r+'</div>';
+ $('#tabs').innerHTML=Object.entries(ROOMS).map(([k,v])=>`<button data-a="room" data-r="${k}" class="${k===room?'on':''}">${v}</button>`).join('');
+ const low=Object.entries(s).sort((a,b)=>a[1]-b[1])[0];
+ $('#pet').innerHTML=`<b>${L<2?'🥚 Яйцо':esc(P.type)} ${esc(P.name)}</b> <span class="mut" style="display:inline">· ${low[1]>60?'всё хорошо 😊':{hunger:'голодный 🍽️',joy:'скучает 🎾',love:'хочет ласки 🤍'}[low[0]]}</span>
+ <div class="bar h"><i style="width:${s.hunger}%"></i></div><div class="bar j"><i style="width:${s.joy}%"></i></div><div class="bar"><i style="width:${s.love}%"></i></div>
+ <div class="row" style="margin-top:8px">${FOOD.map((f,i)=>`<button data-a="feed" data-i="${i}">${f[0]} ${f[2]}💰</button>`).join('')}<button data-a="cuddle">🤍 Приласкать</button></div>`;
+ $('#games').innerHTML=GAMES.map(g=>{const w=Math.max(0,CD-(Date.now()-((S.cd&&S.cd[uid]&&S.cd[uid][g[0]])||0)));
+  return `<button data-a="g" data-g="${g[0]}" ${w?'disabled':''}>${g[1]} ${g[2]}${w?`<small class="m">${Math.ceil(w/1000)} с</small>`:''}</button>`}).join('');
+ $('#pet').innerHTML=petCard(P,s,L);
+ const q=(S.q&&S.q[day()])||{};
+ $('#quests').innerHTML=QUESTS.map(z=>{const n=Math.min(z.n,q[z.k]||0);return `<div class="q"><span>${n>=z.n?'✅':'⬜'} ${z.t}</span><span>${n}/${z.n} · +${z.r}💰</span></div>`}).join('');
+ const p=pid(),ph=p&&S.hug&&S.hug[p]||0,got=S.daily&&S.daily[uid]===day();
+ $('#tog').innerHTML=ph&&Date.now()-ph<60000?'<div class="note">🤗 Второй хозяин уже обнимает — обними в ответ в течение минуты!</div>':'';
+ $('#dl').disabled=!!got;$('#dl').textContent=got?'🎁 Получен':'🎁 Подарок дня';
+ const pn=p&&S.notes&&S.notes[p];$('#pnote').innerHTML=pn?`<div class="note">💌 ${esc(pn.text)}</div>`:'';
+ $('#mail').innerHTML=ms.slice(0,5).map(m=>`<div class="note">${esc(m.text)}<small class="m">${ago(m.ts)}</small></div>`).join('')||'<span class="mut">Писем пока нет — питомец напишет сам.</span>';
+ $('#shop').innerHTML=ITEMS.map(i=>{const own=S.items.includes(i.id),lock=L<i.l,poor=(S.coins||0)<i.c;
+  return `<div class="si"><div class="e">${i.e}</div><b>${i.n}</b><small class="m">${own?'✔ в доме':lock?'🔒 с уровня '+i.l:'💰 '+i.c}</small><button data-a="buy" data-id="${i.id}" ${own||lock||poor?'disabled':''} style="margin-top:6px">Купить</button></div>`}).join('')}
+function showSetup(){
+ $('#setup').style.display='block';
+ $('#setup').innerHTML=`<div class="card"><h2>Выберите общего питомца 🥚</h2><div class="pick">${TYPES.map((t,i)=>`<button data-a="pick" data-i="${i}" class="${i?'':'on'}">${t[0]}</button>`).join('')}</div>
+ <input id="pn" maxlength="14" placeholder="Как вы его назовёте?"><div style="margin-top:10px"><button class="p" data-a="adopt" style="width:100%">Забрать яйцо домой</button></div><p class="mut">Второй человек просто откроет ту же ссылку — и вы будете растить его вдвоём.</p></div>`}
+document.addEventListener('click',async ev=>{
+ const b=ev.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
+ if(a==='paste'){const o=readJ($('#lnk').value);if(!o)return toast('Не похоже на ссылку-приглашение');cfg=o;LS.setItem('hcfg',JSON.stringify(o));start();return}
+ if(a==='create'){let u=$('#fb').value.trim().replace(/\/+$/,'');if(!/^https:\/\/.+\..+/.test(u))return toast('Вставь адрес базы, он начинается с https://');const h=Array.from({length:10},()=>'abcdefghjkmnpqrstuvwxyz23456789'[Math.random()*31|0]).join('');cfg={u,h};try{const r=await fetch(url());if(!r.ok)throw 0}catch(e){cfg=null;return toast('База не отвечает. Проверь адрес и правила (см. инструкцию)')}LS.setItem('hcfg',JSON.stringify(cfg));start();return}
+ if(!S)return;
+ if(a==='pick'){pick=+b.dataset.i;document.querySelectorAll('.pick button').forEach((x,i)=>x.classList.toggle('on',i===pick))}
+ if(a==='adopt'){const nm=($('#pn').value||'').trim()||TYPES[pick][1];
+  await upd({coins:20,xp:0,pet:{type:TYPES[pick][0],name:nm,hunger:80,joy:80,love:80,t:Date.now()},members:{[uid]:Date.now()}})}
+ if(a==='feed'){const f=FOOD[+b.dataset.i];if(stats(S.pet).hunger>92)return toast('Он не голоден 😊');
+  if((S.coins||0)<f[2])return toast('Не хватает монет — заработай в мини-играх 🎮');
+  act({coins:-f[2],xp:2,bump:f[3]},'feed')}
+ if(a==='cuddle'){const need=stats(S.pet).love<85;if(!need)toast('Он и так чувствует вашу любовь 💗');act({xp:need?1:0,bump:{love:25}})}
+ if(a==='buy'){const it=ITEMS.find(i=>i.id===b.dataset.id);if(await act({coins:-it.c,xp:5,extra:{items:[...S.items,it.id]}}))toast(it.e+' теперь в вашем доме!')}
+ if(a==='daily'){if(await act({coins:10,extra:{daily:{[uid]:day()}}}))toast('🎁 +10 монет')}
+ if(a==='hug'){const p=pid(),now=Date.now(),ph=p&&S.hug&&S.hug[p]||0;
+  if(p&&ph&&now-ph<60000){if(await act({coins:10,xp:10,bump:{love:30},extra:{hug:{[uid]:0,[p]:0}}},'hug'))toast('💞 Вы обнялись одновременно! +10 💰')}
+  else if(await upd({hug:{[uid]:now}}))toast(p?'Обнимашка отправлена — ждём ответ 🤗':'Второго хозяина пока нет, обнимашка ждёт 🤗')}
+ if(a==='note'){const t=$('#ni').value.trim();if(t&&await act({extra:{notes:{[uid]:{text:t,ts:Date.now()}}}},'note')){$('#ni').value='';toast('💌 Отправлено')}}
+ if(a==='g'){const g=GAMES.find(x=>x[0]===b.dataset.g);fin=false;$('#gn').textContent=g[1]+' '+g[2];$('#gt').textContent='';$('#gs').textContent=0;$('#arena').innerHTML='';$('#game').classList.add('on');stopG=null;g[3]()}
+ if(a==='room'){room=b.dataset.r;if(lvl(S.xp)>=3){said=[say(),Date.now()+5000];setTimeout(render,5100)}render()}
+ if(a==='talk'){said=[say(),Date.now()+5000];render();setTimeout(render,5100)}
+ if(a==='potty'){if(stats(S.pet).potty>70)return toast('Ему пока не хочется 😊');act({coins:1,xp:2,bump:{potty:100}});toast('🚽 Молодец!')}
+ if(a==='bath'){const need=stats(S.pet).love<90;act({xp:need?1:0,bump:{love:15,joy:5}});toast('🛁 Чистенький и довольный')}
+ if(a==='ball'){act({bump:{joy:20,potty:-5}});toast('⚽ Побегал за мячиком!')}
+ if(a==='walk'){walkUntil=Date.now()+4000;const lucky=Math.random()<.15,c=lucky?0:3+Math.floor(Math.random()*7);render();setTimeout(render,4100);
+  if(await act({coins:c,xp:c||8,bump:{joy:25,potty:-15},extra:{walk:Date.now()}},'walk'))setTimeout(()=>toast(lucky?'🌼 Нашёл красивый цветочек (+8 XP)':'🚶 Прогулка удалась: нашёл '+c+' 💰'),4000)}
+ if(a==='join'){const ids=Object.keys(S.members),p={members:{[uid]:Date.now()}};if(ids.length>=2)p.members[ids.sort((x,y)=>S.members[x]-S.members[y])[0]]=null;await upd(p)}
+ if(a==='share'){const l=link();if(navigator.share)navigator.share({title:'Наш уютный дом',text:'Расти питомца вместе со мной 🥚',url:l}).catch(()=>{});else{try{await navigator.clipboard.writeText(l);toast('Ссылка скопирована')}catch(e){$('#inv').select()}}}
+ if(a==='copy'){try{await navigator.clipboard.writeText(link());toast('Ссылка скопирована')}catch(e){$('#inv').select();toast('Выдели и скопируй ссылку вручную')}}
+ if(a==='leave'){if(confirm('Выйти из дома на этом устройстве? Сам дом сохранится.')){LS.removeItem('hcfg');history.replaceState(null,'','#');location.reload()}}
+ if(a==='close'){fin=true;stopG&&stopG();$('#game').classList.remove('on')}
+});
+const ar=()=>$('#arena'),setS=v=>$('#gs').textContent=v;
+function finish(g,coins){if(fin)return;fin=true;stopG&&stopG();const p=S.pet;
+ ar().innerHTML=`<div style="padding:40px 20px;text-align:center"><div style="font-size:60px">${S.pet&&lvl(S.xp)>1?esc(p.type):'🥚'}</div><h2>${coins>0?'Заработано: +'+coins+' 💰':'В этот раз без монет'}</h2><p class="mut">питомец повеселел</p><button class="p" data-a="close">Домой</button></div>`;
+ act({coins,xp:coins,bump:{joy:15},extra:{cd:{[uid]:{[g]:Date.now()}}}},'game')}
+function timer(sec,done){let t=sec;$('#gt').textContent=t;const i=setInterval(()=>{t--;$('#gt').textContent=t;if(t<=0){clearInterval(i);done()}},1000);return i}
+function gCatch(){let sc=0;const tk=timer(20,()=>finish('catch',Math.min(9,Math.round(sc/2))));
+ const sp=setInterval(()=>{const f=document.createElement('button'),bad=Math.random()<.25;f.className='fall';f.textContent=bad?'💔':'💖';f.style.left=(Math.random()*80+4)+'%';
+  f.onpointerdown=()=>{sc=Math.max(0,sc+(bad?-2:1));setS(sc);f.remove()};ar().appendChild(f);setTimeout(()=>f.remove(),3300)},520);
+ stopG=()=>{clearInterval(tk);clearInterval(sp)}}
+function gMem(){const E=['🍓','🍰','🐟','🌷','⭐','🎀'];let open=[],done=0,mv=0,lock=false;
+ ar().innerHTML='<div class="g4"></div>';
+ [...E,...E].sort(()=>Math.random()-.5).forEach(e=>{const b=document.createElement('button');b.className='mc';b.textContent='❔';
+  b.onclick=()=>{if(lock||b.dataset.o)return;b.textContent=e;b.dataset.o=1;open.push([b,e]);if(open.length<2)return;mv++;setS(mv);lock=true;const[[b1,e1],[b2,e2]]=open;
+   if(e1===e2){done++;open=[];lock=false;if(done===6)setTimeout(()=>finish('mem',Math.max(2,Math.min(8,14-mv))),400)}
+   else setTimeout(()=>{b1.textContent=b2.textContent='❔';delete b1.dataset.o;delete b2.dataset.o;open=[];lock=false},700)};
+  ar().firstChild.appendChild(b)})}
+function gWhack(){let sc=0,on=-1;ar().innerHTML='<div class="g3">'+'<button class="mc"></button>'.repeat(9)+'</div>';const cs=[...ar().querySelectorAll('.mc')];
+ cs.forEach((b,i)=>b.onpointerdown=()=>{if(i===on){sc++;setS(sc);b.textContent='';on=-1}});
+ const mv=setInterval(()=>{if(on>=0)cs[on].textContent='';on=Math.floor(Math.random()*9);cs[on].textContent='🐭'},750);
+ const tk=timer(20,()=>finish('whack',Math.min(8,Math.round(sc/2))));stopG=()=>{clearInterval(mv);clearInterval(tk)}}
+function gReact(){let r=0,sc=0,st=0,ph=0,tm;ar().innerHTML='<button id="rb" class="rb"></button>';const b=$('#rb');
+ function round(){ph=0;b.style.background='#ff6b6b';b.textContent='Жди зелёного…';tm=setTimeout(()=>{ph=1;st=Date.now();b.style.background='#4cd97b';b.textContent='ЖМИ!'},1000+Math.random()*2000)}
+ b.onpointerdown=()=>{if(ph===2)return;if(ph===0){clearTimeout(tm);b.textContent='Рано! 0 очков'}else{const ms=Date.now()-st;sc+=ms<350?3:ms<500?2:1;b.textContent=ms+' мс'}
+  r++;setS(sc);ph=2;if(r>=3)setTimeout(()=>finish('react',sc),900);else setTimeout(round,900)};
+ round();stopG=()=>clearTimeout(tm)}
+function gMath(){let sc=0;const tk=timer(25,()=>finish('math',Math.min(9,Math.round(sc/1.5))));stopG=()=>clearInterval(tk);
+ (function next(){const a=2+Math.random()*12|0,b=2+Math.random()*12|0,s=a+b,k=1+Math.random()*3|0,o=[s,s+k,s-k].sort(()=>Math.random()-.5);
+  ar().innerHTML=`<div style="text-align:center;padding:40px 10px"><div style="font-size:46px;margin-bottom:20px">${a} + ${b}</div>${o.map(v=>`<button class="mc" data-v="${v}" style="margin:6px;width:84px;height:64px;font-size:26px">${v}</button>`).join('')}</div>`;
+  ar().querySelectorAll('button').forEach(x=>x.onclick=()=>{if(+x.dataset.v===s){sc++;setS(sc)}if(!fin)next()})})()}
+function say(){const L=lvl(S.xp),s=stats(S.pet);
+ if(L<2)return['*тук-тук* внутри яйца что-то шевелится 🥚','*яйцо тёплое и чуть дрожит*'][Math.random()*2|0];
+ let P;
+ if(L<3)P=['Бу! 🍼','Ам-ам!','Пи-пи 🥺','Ма-ма… па-па…','Агу! 💗'];
+ else{P=['Я вас люблю! 💗','Вы мои самые любимые!','Давайте всегда будем вместе 🥺','Вы сегодня улыбались? Я — да! 😊','Обнимитесь за меня 🤗'];
+  if(L>=5)P.push('Мне так хорошо, что вы у меня есть ✨','Когда вы рядом, мне ничего не страшно','Расскажите, как вы познакомились? 🥰','Я уже такой большой! Могу вас защищать 💪');
+  const R={kitchen:['Ням-ням! Вкуснотища 😋','Это самое вкусное на свете!'],bath:['Хи-хи, водичка! 💧','Только не мочите ушки 🛁'],yard:['Ура, травка! 🌿','Смотрите, облачко как сердечко ☁️💗']};
+  if(R[room])P=P.concat(R[room],R[room]);
+  if(s.potty<25)P=['Мне срочно нужно в туалет! 🚽'];else if(s.hunger<25)P=['Животик урчит… 🍓']}
+ return P[Math.random()*P.length|0]}
+function petCard(P,s,L){
+ const low=Object.entries(s).sort((a,b)=>a[1]-b[1])[0];
+ const mood=low[1]>60?'всё хорошо 😊':{hunger:'голодный 🍽️',joy:'скучает 🎾',love:'хочет ласки 🤍',potty:'хочет в туалет 🚽'}[low[0]];
+ const age=L<2?'яйцо':L<3?'малыш':L<5?'ребёнок':'подросток';
+ const B=(c,v)=>`<div class="bar ${c}"><i style="width:${v}%"></i></div>`;let a='';
+ if(room==='home')a='<button data-a="cuddle">🤍 Приласкать</button><button data-a="talk">💬 Поговорить</button>';
+ if(room==='kitchen')a=FOOD.map((f,i)=>`<button data-a="feed" data-i="${i}">${f[0]} ${f[2]}💰</button>`).join('');
+ if(room==='bath')a='<button data-a="potty">🚽 В туалет</button><button data-a="bath">🛁 Помыть</button>';
+ if(room==='yard'){const w=Math.max(0,WALK-(Date.now()-(S.walk||0)));a=`<button data-a="walk" ${w?'disabled':''}>🚶 Погулять${w?' ('+Math.ceil(w/60000)+' мин)':''}</button><button data-a="ball">⚽ Мячик</button>`}
+ return `<b>${L<2?'🥚':esc(P.type)} ${esc(P.name)}</b> <span class="mut" style="display:inline">· ${age} · ${mood}</span>${B('h',s.hunger)}${B('j',s.joy)}${B('',s.love)}${B('p',s.potty)}<small class="m">🟠 голод · 🔵 веселье · 💗 ласка · 🟢 туалет · нажми на питомца, чтобы он что-то сказал</small><div class="row" style="margin-top:8px">${a}</div>`}
+const GAMES=[['catch','💖','Сердечки',gCatch],['mem','🧠','Память',gMem],['whack','🐭','Мышки',gWhack],['react','⚡','Реакция',gReact],['math','➕','Счёт',gMath]];
+init();
+</script></body></html>
